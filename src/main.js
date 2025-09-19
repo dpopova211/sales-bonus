@@ -5,9 +5,11 @@
  * @returns {number}
  */
 function calculateSimpleRevenue(purchase, _product) {
-   // @TODO: Расчет выручки от операции
+
    const { discount, sale_price, quantity } = purchase;
+   
    const decimalDiscount = discount / 100;
+
    return sale_price * quantity * (1 - decimalDiscount);
 }
 
@@ -19,16 +21,19 @@ function calculateSimpleRevenue(purchase, _product) {
  * @returns {number}
  */
 function calculateBonusByProfit(index, total, seller) {
-    // @TODO: Расчет бонуса от позиции в рейтинге
+
     const { profit } = seller;
+
     let bonusPercentage = 0;
+
     if (index === 0) {
-        bonusPercentage = 0.15; // 15% для первого места
+        bonusPercentage = 0.15;
     } else if (index === 1 || index === 2) {
-        bonusPercentage = 0.10; // 10% для второго и третьего места
+        bonusPercentage = 0.10;
     } else if (index < total - 1) {
-        bonusPercentage = 0.05; // 5% для всех кроме последнего
+        bonusPercentage = 0.05; 
     }
+
     return profit * bonusPercentage;
 }
 
@@ -79,6 +84,7 @@ function analyzeSalesData(data, options) {
     );
 
     data.purchase_records.forEach(record => {
+
         const seller = sellerIndex[record.seller_id];
         
         if (!seller) {
@@ -113,6 +119,7 @@ function analyzeSalesData(data, options) {
     sellerStats.sort((a, b) => b.profit - a.profit);
 
     const totalSellers = sellerStats.length;
+
     sellerStats.forEach((seller, index) => {
         seller.bonus = calculateBonus(index, totalSellers, seller);
         
